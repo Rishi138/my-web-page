@@ -12,23 +12,53 @@
 </head>
 
 <body>
-
-	<p id = "score">0</p>
+	<p id = "first-place"></p>
+	<p id = "second-place"></p>
+	<p id = "third-place"></p>
+	<p id="score">0</p>
 	<div id="chain-reaction"></div>
 	<button id="reset" onclick="resetBoard()">reset</button>
 	<script src="https://code.jquery.com/jquery-3.5.1.js"
 		integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 
 	<script src="./chain-reaction.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-firestore.js"></script>
 
 	<script>
+		const firebaseConfig = {
+			apiKey: "AIzaSyADyR499c0hTo1Bemy78SBBNMYboh9pWgM",
+			authDomain: "planets-95790.firebaseapp.com",
+			projectId: "planets-95790",
+			storageBucket: "planets-95790.appspot.com",
+			messagingSenderId: "284261487641",
+			appId: "1:284261487641:web:dea378be6f0811b1f7c688",
+			measurementId: "G-BTL1MVCG6L"
+		};
+
+		firebase.initializeApp(firebaseConfig);
+		let leaderboard = firebase.firestore().collection("games");
+		function firstPlace(score){
+			$("#first-place").text(score.score)
+		}
+		function secondPlace(score){
+			$("#second-place").text(score.score)
+		}
+		function thirdPlace(score){
+			$("#third-place").text(score.score)
+		}
+		firebase.firestore().collection("chain-reaction-leaderboard").doc("first-place").get().then(firstPlace)
+		firebase.firestore().collection("chain-reaction-leaderboard").doc("second-place").get().then(secondPlace)
+		firebase.firestore().collection("chain-reaction-leaderboard").doc("third-place").get().then(thirdPlace)
+		
 
 		// Documentation:
 		// https://gist.github.com/xavi-/54bd4f27af9e4e64f9a161dc58861555
 		let score = 0;
 		let chainRx = new ChainReaction("#chain-reaction", 400, 400);
 
-		function changeScore(){
+		function changeScore() {
 			$("#score").text(score);
 		}
 
