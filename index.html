@@ -36,16 +36,22 @@
 			appId: "1:284261487641:web:dea378be6f0811b1f7c688",
 			measurementId: "G-BTL1MVCG6L"
 		};
+		let firstPlace = 0;
+		let secondPlace = 0;
+		let thirdPlace = 0;
 
 		firebase.initializeApp(firebaseConfig);
 		let leaderboard = firebase.firestore().collection("games");
 		function firstPlace(score){
+			firstPlace = score.data().score;
 			$("#first-place").text("First Place: "+score.data().score)
 		}
 		function secondPlace(score){
+			secondPlace = score.data().score;
 			$("#second-place").text("Second Place: "+score.data().score)
 		}
 		function thirdPlace(score){
+			thirdPlace = score.data().score;
 			$("#third-place").text("Third Place: "+score.data().score)
 		}
 		firebase.firestore().collection("chain-reaction-leaderboard").doc("first-place").get().then(firstPlace)
@@ -79,6 +85,15 @@
 			if (chainRx.isEmpty()) {
 				console.log(score)
 				alert(`Game over! Press reset to try again. Your score was ${score}`);
+				if(score < thirdPlace){
+					//user did not make leadboard
+				}else if(score < secondPlace){
+					firebase.firestore().collection("chain-reaction-leaderboard").doc("third-place").set({score:score})
+				}else if(score < firstPlace){
+					firebase.firestore().collection("chain-reaction-leaderboard").doc("second-place").set({score:score})
+				}else{
+					firebase.firestore().collection("chain-reaction-leaderboard").doc("first-place").set({score:score})
+				}
 			}
 		});
 
