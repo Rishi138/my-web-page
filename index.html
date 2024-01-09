@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <style>
+    #chain-reaction {
+      border: 1px solid #000;
+      margin: 10px;
+      position: relative;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="chain-reaction"></div>
+	<button id="reset" onclick = "resetBoard()">reset</button>
+  <script src="https://code.jquery.com/jquery-3.5.1.js"
+    integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+    crossorigin="anonymous"></script>
+
+  <script src="./chain-reaction.js"></script>
+
+  <script>
+    
+    // Documentation:
+    // https://gist.github.com/xavi-/54bd4f27af9e4e64f9a161dc58861555
+		let score = 0;
+    let chainRx = new ChainReaction("#chain-reaction", 400, 400);
+		for(let i = 0; i < 50; i++) {
+			chainRx.addBall({ color: "green", posX: 400, posY: 0 });
+		}
+
+		chainRx.onClick((posX, posY) => {
+			score -= 500
+			chainRx.explode(posX, posY, 40);
+		});
+		chainRx.onTouchExplosion((posX, posY, ballId) => {
+			score += 100
+			chainRx.explode(posX, posY, 50)
+			chainRx.removeBall(ballId)
+			if(chainRx.isEmpty()){
+				console.log(score)
+				alert(`Game over! Press reset to try again. Your score was ${score}`);
+			}
+		});
+
+		function resetBoard(){
+			score = 0;
+			chainRx.reset();
+			for(let i = 0; i < 50; i++) {
+				chainRx.addBall({ color: "green", posX: 400, posY: 0 });
+			}
+		}
+
+		
+  </script>
+</body>
+
+</html>
