@@ -68,7 +68,7 @@
 			$("#score").text(score);
 		}
 
-		for (let i = 0; i < Math.round(Math.random()*60); i++) {
+		for (let i = 0; i < Math.round(Math.random()*100); i++) {
 			chainRx.addBall({ color: "green", posX: 400, posY: 0 });
 		}
 
@@ -107,7 +107,7 @@
 			score = 0;
 			changeScore()
 			chainRx.reset();
-			for (let i = 0; i < Math.round(Math.random()*60); i++) {
+			for (let i = 0; i < Math.round(Math.random()*100); i++) {
 				chainRx.addBall({ color: "green", posX: 400, posY: 0 });
 			}
 		}
