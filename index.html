@@ -40,13 +40,13 @@
 		firebase.initializeApp(firebaseConfig);
 		let leaderboard = firebase.firestore().collection("games");
 		function firstPlace(score){
-			$("#first-place").text(score.score)
+			$("#first-place").text(score.data().score)
 		}
 		function secondPlace(score){
-			$("#second-place").text(score.score)
+			$("#second-place").text(score.data().score)
 		}
 		function thirdPlace(score){
-			$("#third-place").text(score.score)
+			$("#third-place").text(score.data().score)
 		}
 		firebase.firestore().collection("chain-reaction-leaderboard").doc("first-place").get().then(firstPlace)
 		firebase.firestore().collection("chain-reaction-leaderboard").doc("second-place").get().then(secondPlace)
