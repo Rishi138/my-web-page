@@ -42,21 +42,21 @@
 
 		firebase.initializeApp(firebaseConfig);
 		let leaderboard = firebase.firestore().collection("games");
-		function firstPlace(score){
+		function editfirstPlace(score){
 			firstPlace = score.data().score;
 			$("#first-place").text("First Place: "+score.data().score)
 		}
-		function secondPlace(score){
+		function editsecondPlace(score){
 			secondPlace = score.data().score;
 			$("#second-place").text("Second Place: "+score.data().score)
 		}
-		function thirdPlace(score){
+		function editthirdPlace(score){
 			thirdPlace = score.data().score;
 			$("#third-place").text("Third Place: "+score.data().score)
 		}
-		firebase.firestore().collection("chain-reaction-leaderboard").doc("first-place").get().then(firstPlace)
-		firebase.firestore().collection("chain-reaction-leaderboard").doc("second-place").get().then(secondPlace)
-		firebase.firestore().collection("chain-reaction-leaderboard").doc("third-place").get().then(thirdPlace)
+		firebase.firestore().collection("chain-reaction-leaderboard").doc("first-place").get().then(editfirstPlace)
+		firebase.firestore().collection("chain-reaction-leaderboard").doc("second-place").get().then(editsecondPlace)
+		firebase.firestore().collection("chain-reaction-leaderboard").doc("third-place").get().then(editthirdPlace)
 		
 
 		// Documentation:
