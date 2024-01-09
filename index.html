@@ -91,13 +91,19 @@
 					firebase.firestore().collection("chain-reaction-leaderboard").doc("third-place").set({score:score})
 				}else if(score < firstPlace){
 					firebase.firestore().collection("chain-reaction-leaderboard").doc("second-place").set({score:score})
+					firebase.firestore().collection("chain-reaction-leaderboard").doc("third-place").set({score:secondPlace})
 				}else{
+					firebase.firestore().collection("chain-reaction-leaderboard").doc("third-place").set({score:secondPlace})
+					firebase.firestore().collection("chain-reaction-leaderboard").doc("second-place").set({score:firstPlace})
 					firebase.firestore().collection("chain-reaction-leaderboard").doc("first-place").set({score:score})
 				}
 			}
 		});
 
 		function resetBoard() {
+			firebase.firestore().collection("chain-reaction-leaderboard").doc("first-place").get().then(editfirstPlace)
+			firebase.firestore().collection("chain-reaction-leaderboard").doc("second-place").get().then(editsecondPlace)
+			firebase.firestore().collection("chain-reaction-leaderboard").doc("third-place").get().then(editthirdPlace)
 			score = 0;
 			changeScore()
 			chainRx.reset();
